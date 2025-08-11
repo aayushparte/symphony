@@ -1,0 +1,49 @@
+.panel-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.registration-section,
+.search-section {
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.registration-section h2,
+.search-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.registration-section form input,
+.search-section input {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #999;
+  border-radius: 5px;
+}
+
+.registration-section form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #55185d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.registration-section form button:hover {
+  background-color: #3e0f46;
+}
+
+

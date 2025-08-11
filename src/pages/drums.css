@@ -1,0 +1,86 @@
+body {
+  font-family: 'Times New Roman', Times, serif;
+  line-height: 1.5;
+  background-color: #fff;
+  color: #333;
+}
+
+/* Banner Image */
+.banner img {
+  width: 20%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Content Section */
+.content {
+  padding: 30px 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.content h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #111;
+}
+
+.content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+.program ul {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.program li {
+  margin-bottom: 10px;
+  list-style-type: disc;
+}
+
+/* Book Now Button */
+.book-now-btn {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.book-now-btn button {
+  background-color: orange;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  font-size: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.book-now-btn button:hover {
+  background-color: #ff9900;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content {
+    padding: 20px 15px;
+  }
+
+  .content h2 {
+    font-size: 1.6rem;
+  }
+
+  .content p,
+  .program ul {
+    font-size: 1rem;
+  }
+
+  .book-now-btn button {
+    width: 80%;
+  }
+}
