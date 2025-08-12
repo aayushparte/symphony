@@ -1,6 +1,6 @@
 import axios from 'axios';
 const userApi2 = axios.create({
-  baseURL: 'http://localhost:5000/student'
+  baseURL: 'https://symphony-dvnx.onrender.com/student'
 });
 
 export default userApi2
