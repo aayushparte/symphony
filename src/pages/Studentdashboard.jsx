@@ -1,37 +1,47 @@
 import './Navbar.css';
 import './studentdashboard.css';
 import logo2 from '../assets/logo3.jpg';
-import {  useState } from 'react';
+import { useState, useEffect } from 'react';
 import userApi from '../axios';
-import { useEffect } from 'react';
 
 const Studentdashboard = () => {
   
-const [StudentData,setStudentData]=useState();
+  const [StudentData, setStudentData] = useState();
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const email = localStorage.getItem("studentEmail"); // <-- get from localStorage
-      if (!email) {
-        alert("No email found in localStorage.");
-        return;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const email = localStorage.getItem("studentEmail"); 
+        if (!email) {
+          alert("No email found in localStorage.");
+          return;
+        }
+
+        const response = await userApi.post('/getdata', { email: email });
+        setStudentData(response.data);
+      } catch (err) {
+        if (err.response && err.response.status === 404) {
+          alert('Student not found');
+        } else {
+          alert('Server error. Please try again.');
+        }
+        setStudentData(null);
       }
+    };
 
-      const response = await userApi.post('/getdata', { email: email });
-      setStudentData(response.data);
-    } catch (err) {
-      if (err.response && err.response.status === 404) {
-        alert('Student not found');
-      } else {
-        alert('Server error. Please try again.');
-      }
-      setStudentData(null);
-    }
-  };
+    fetchData();
+  }, []);
 
-  fetchData();
-}, []);
+  // Live date updater
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   if (!StudentData) {
     return <div>Loading student dashboard...</div>;
   }
@@ -45,53 +55,52 @@ useEffect(() => {
 
       <div>
 
-      <div className="container">
+        <div className="container">
 
-        <div className="section">
-          <h2>My Enrolled Course</h2><span>{StudentData.Subject}</span>
+          <div className="section">
+            <h2>My Enrolled Course</h2><span>{StudentData.Subject}</span>
+          </div>
+
+          <div className="section">
+            <h2>Upcoming Class</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Course</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{String(currentDate.getDate()).padStart(2, '0') + "-" +
+   String(currentDate.getMonth() + 1).padStart(2, '0') + "-" +
+   currentDate.getFullYear()}</td>
+                  <td>{StudentData.Subject}</td>
+                  <td>5:00 PM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="section">
+            <h2>Announcements</h2>
+            <ul>
+              <li>Art competition on 30th August – Register now!</li>
+              <li>{StudentData.Subject} class on 26th August is rescheduled to 29th August.</li>
+            </ul>
+          </div>
+
+          <div className="section">
+            <h2>My Profile</h2>
+            <p><strong>Full Name:</strong> {StudentData.Name}</p>
+            <p><strong>Email:</strong> {StudentData.Email}</p>
+          </div>
+
         </div>
-
-        <div className="section">
-          <h2>Upcoming Class</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Course</th>
-                <th>Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>24 July 2025</td>
-                <td>{StudentData.Subject}</td>
-                <td>5:00 PM</td>
-              </tr>
-            
-            </tbody>
-          </table>
-        </div>
-
-        
-
-        <div className="section">
-          <h2>Announcements</h2>
-          <ul>
-            <li>Art competition on 30th July – Register now!</li>
-            <li> Keyboard class on 26th July is rescheduled to 27th July.</li>
-          </ul>
-        </div>
-
-        <div className="section">
-          <h2>My Profile</h2>
-          <p><strong>Full Name:</strong> {StudentData.Name}</p>
-          <p><strong>Email:</strong> {StudentData.Email}</p>
-        </div>
-
       </div>
-    </div>
     </div>
   )
 }
 
-export default Studentdashboard
+export default Studentdashboard;
